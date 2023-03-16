@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+      ignore_errors: yes
+
+    - name: Update repository
+      apt_repository:
+       repo: 'ppa:git-core/ppa'
+       state: present
+      ignore_errors: yes
+
+    - name: Install git
+      apt:
+       name: git
+       state: present
+       update_cache: yes
+      ignore_errors: yes
+
+    - name: install a vim on ubuntu
+      apt:
+        name: vim
+        state: latest
+      ignore_errors: yes
+      when: ansible_distribution == 'Ubuntu'      
+
+    - name: install a tcpdump on ubuntu
+      apt:
+        name: tcpdump
+        state: latest
+      ignore_errors: yes
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: install a screen on ubuntu
+      apt:
+        name: screen
+        state: latest
+      ignore_errors: yes
+      when: ansible_distribution == 'Ubuntu'
